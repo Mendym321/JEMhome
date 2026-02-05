@@ -1,0 +1,1815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JEM - Living Archive of the Rebbe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --primary-light: #16213e;
+            --accent: #c9a961;
+            --accent-bright: #e8c98c;
+            --text-dark: #1a1a1a;
+            --text-light: #6b7280;
+            --bg-light: #faf9f7;
+            --white: #ffffff;
+            --premium-gradient: linear-gradient(135deg, #c9a961 0%, #b8935a 50%, #a67c52 100%);
+            --free-color: #059669;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            background: var(--bg-light);
+        }
+        
+        /* HEADER */
+        header {
+            background: var(--primary);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 2px;
+            cursor: pointer;
+        }
+        
+        .main-nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: var(--accent);
+        }
+        
+        .premium-btn {
+            background: var(--premium-gradient);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(201, 169, 97, 0.3);
+        }
+        
+        .premium-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(201, 169, 97, 0.5);
+        }
+        
+        /* DROPDOWN NAVIGATION */
+        .nav-item {
+            position: relative;
+        }
+        
+        .nav-link-dropdown {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .nav-link-dropdown:hover {
+            background: rgba(201, 169, 97, 0.2);
+            color: var(--accent);
+        }
+        
+        .dropdown-arrow {
+            font-size: 0.7rem;
+            transition: transform 0.3s;
+        }
+        
+        .nav-item:hover .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+        
+        /* MEGA MENU */
+        .mega-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 0.5rem;
+            background: var(--primary);
+            border: 1px solid rgba(201, 169, 97, 0.3);
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            padding: 2rem;
+            min-width: 600px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            pointer-events: none;
+        }
+        
+        .nav-item:hover .mega-menu {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: all;
+            margin-top: 1rem;
+        }
+        
+        .mega-menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+        
+        .mega-menu-section h3 {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .mega-menu-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .mega-menu-link {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .mega-menu-link:hover {
+            background: rgba(201, 169, 97, 0.2);
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+        
+        .mega-menu-icon {
+            font-size: 1.3rem;
+            width: 35px;
+            text-align: center;
+        }
+        
+        .mega-menu-text {
+            flex: 1;
+        }
+        
+        .mega-menu-text span {
+            display: block;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 0.15rem;
+        }
+        
+        .mega-menu-count {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            background: rgba(201, 169, 97, 0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+        }
+        
+        /* SIMPLE DROPDOWN */
+        .simple-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            margin-top: 0.5rem;
+            background: var(--primary);
+            border: 1px solid rgba(201, 169, 97, 0.3);
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            padding: 0.5rem;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            pointer-events: none;
+        }
+        
+        .nav-item:hover .simple-dropdown {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: all;
+            margin-top: 1rem;
+        }
+        
+        .simple-dropdown a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        
+        .simple-dropdown a:hover {
+            background: rgba(201, 169, 97, 0.2);
+            color: var(--accent);
+        }
+        
+        /* FEATURED SLIDER */
+        .featured-slider {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            background: var(--primary);
+        }
+        
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .slide.active {
+            opacity: 1;
+        }
+        
+        .slide-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to right, rgba(26, 26, 46, 0.9) 0%, rgba(26, 26, 46, 0.4) 100%);
+            display: flex;
+            align-items: center;
+        }
+        
+        .slide-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .slide-text {
+            color: white;
+        }
+        
+        .slide-badge {
+            display: inline-block;
+            background: var(--free-color);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+        
+        .slide-badge.premium {
+            background: var(--premium-gradient);
+        }
+        
+        .slide-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .slide-text p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+        
+        .slide-meta {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+        
+        .slide-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: white;
+            color: var(--primary);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .slide-preview {
+            position: relative;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            aspect-ratio: 16/9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .play-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .play-icon:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.4);
+        }
+        
+        /* SLIDER CONTROLS */
+        .slider-nav {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.75rem;
+            z-index: 10;
+        }
+        
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .slider-dot.active {
+            background: white;
+            width: 40px;
+            border-radius: 6px;
+        }
+        
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.5rem;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .slider-arrow:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .slider-arrow.prev {
+            left: 2rem;
+        }
+        
+        .slider-arrow.next {
+            right: 2rem;
+        }
+        
+        /* BEGINNER BANNER */
+        .beginner-banner {
+            background: linear-gradient(135deg, #fff7e6 0%, #ffe8cc 100%);
+            padding: 2rem;
+            border-bottom: 3px solid var(--accent);
+            position: relative;
+            animation: slideDown 0.5s ease;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .beginner-banner.hidden {
+            display: none;
+        }
+        
+        .banner-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .banner-close {
+            position: absolute;
+            top: -0.5rem;
+            right: 0;
+            background: transparent;
+            border: none;
+            font-size: 2rem;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .banner-close:hover {
+            background: rgba(0, 0, 0, 0.1);
+            color: var(--text-dark);
+            transform: rotate(90deg);
+        }
+        
+        .banner-content {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .banner-icon {
+            font-size: 3rem;
+            background: white;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .banner-text h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .banner-text p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+        
+        .banner-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .banner-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        
+        .banner-btn.primary {
+            background: var(--premium-gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(201, 169, 97, 0.3);
+        }
+        
+        .banner-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(201, 169, 97, 0.4);
+        }
+        
+        .banner-btn.secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--accent);
+        }
+        
+        .banner-btn.secondary:hover {
+            background: var(--bg-light);
+        }
+        
+        /* MAIN CONTAINER */
+        .main-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        
+        /* SECTIONS */
+        .section {
+            margin-bottom: 4rem;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        
+        .section-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s;
+        }
+        
+        .section-link:hover {
+            gap: 1rem;
+        }
+        
+        /* VIDEO CARDS */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+        
+        @media (max-width: 1400px) {
+            .content-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (max-width: 1000px) {
+            .content-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .video-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        .video-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .video-card.premium {
+            border: 2px solid transparent;
+            background: linear-gradient(white, white) padding-box,
+                        var(--premium-gradient) border-box;
+        }
+        
+        .video-thumbnail {
+            position: relative;
+            height: 180px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .premium-lock {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 40%, rgba(0, 0, 0, 0.9) 100%);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 2rem;
+            z-index: 3;
+        }
+        
+        .lock-icon {
+            font-size: 2rem;
+            color: var(--accent);
+        }
+        
+        .video-duration {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+        
+        .access-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            z-index: 2;
+            text-transform: uppercase;
+        }
+        
+        .access-badge.free {
+            background: var(--free-color);
+            color: white;
+        }
+        
+        .access-badge.premium {
+            background: var(--premium-gradient);
+            color: white;
+        }
+        
+        .video-info {
+            padding: 1.25rem;
+        }
+        
+        .video-category {
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .video-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+        
+        .video-description {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 0.75rem;
+        }
+        
+        .video-meta {
+            display: flex;
+            gap: 1rem;
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+        
+        /* COMPACT MEMBERSHIP BANNER */
+        .membership-banner-compact {
+            background: var(--premium-gradient);
+            color: white;
+            padding: 2.5rem 3rem;
+            margin: 4rem 0;
+            border-radius: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+            box-shadow: 0 10px 40px rgba(201, 169, 97, 0.4);
+            transition: all 0.3s;
+        }
+        
+        .membership-banner-compact:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 50px rgba(201, 169, 97, 0.5);
+        }
+        
+        .membership-banner-compact .content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .membership-banner-compact .content p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+        
+        .membership-banner-compact button {
+            background: white;
+            color: var(--primary);
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .membership-banner-compact button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* MEMBERSHIP MODAL */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(5px);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-content {
+            background: var(--primary);
+            color: white;
+            border-radius: 20px;
+            max-width: 1200px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.4s ease;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(60px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.8rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+        
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+        
+        .modal-header {
+            padding: 4rem 3rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(201, 169, 97, 0.2);
+        }
+        
+        .modal-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: var(--premium-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .modal-header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .modal-body {
+            padding: 3rem;
+        }
+        
+        .modal-pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        @media (max-width: 1000px) {
+            .modal-pricing-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .membership-banner-compact {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+        
+        /* MEMBERSHIP SECTION - OLD (HIDDEN) */
+        .membership-section {
+            display: none;
+        }
+        
+        .membership-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .membership-container h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: var(--premium-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .membership-container > p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 3rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(201, 169, 97, 0.3);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            transition: all 0.3s;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+        }
+        
+        .pricing-card.featured {
+            background: var(--premium-gradient);
+            border-color: transparent;
+            transform: scale(1.05);
+        }
+        
+        .pricing-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .pricing-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 1rem 0;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+        
+        .pricing-features li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .pricing-features li::before {
+            content: "✓";
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        .pricing-card.featured .pricing-features li::before {
+            color: white;
+        }
+        
+        .pricing-cta {
+            width: 100%;
+            padding: 1rem 2rem;
+            border: 2px solid var(--accent);
+            background: transparent;
+            color: white;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .pricing-cta:hover {
+            background: var(--accent);
+        }
+        
+        .pricing-card.featured .pricing-cta {
+            background: white;
+            color: var(--primary);
+            border-color: white;
+        }
+        
+        /* FOOTER */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 3rem 2rem 2rem;
+        }
+        
+        .footer-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-about h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        .footer-links h4 {
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        .footer-links a {
+            display: block;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        
+        .footer-bottom {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(201, 169, 97, 0.2);
+            text-align: center;
+            opacity: 0.6;
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 1200px) {
+            .slide-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .slide-preview {
+                display: none;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .banner-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                text-align: center;
+            }
+            
+            .banner-icon {
+                margin: 0 auto;
+            }
+            
+            .banner-actions {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .featured-slider {
+                height: 400px;
+            }
+            
+            .slide-text h2 {
+                font-size: 2rem;
+            }
+            
+            .main-nav {
+                display: none;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-content">
+            <div class="logo">JEM</div>
+            
+            <nav class="main-nav">
+                <a href="jem-homepage-hybrid.html" class="nav-link">Home</a>
+                
+                <!-- BROWSE BY TYPE DROPDOWN -->
+                <div class="nav-item">
+                    <div class="nav-link-dropdown">
+                        Browse by Type
+                        <span class="dropdown-arrow">▼</span>
+                    </div>
+                    <div class="mega-menu">
+                        <div class="mega-menu-grid">
+                            <div class="mega-menu-section">
+                                <h3>Video Content</h3>
+                                <div class="mega-menu-links">
+                                    <a href="jem-films-page.html" class="mega-menu-link">
+                                        <span class="mega-menu-icon">🎬</span>
+                                        <div class="mega-menu-text">
+                                            <strong>Films & Documentaries</strong>
+                                            <span>Professionally produced</span>
+                                        </div>
+                                        <span class="mega-menu-count">342</span>
+                                    </a>
+                                    <a href="#" class="mega-menu-link">
+                                        <span class="mega-menu-icon">🎤</span>
+                                        <div class="mega-menu-text">
+                                            <strong>Public Talks</strong>
+                                            <span>Addresses & speeches</span>
+                                        </div>
+                                        <span class="mega-menu-count">1,247</span>
+                                    </a>
+                                    <a href="#" class="mega-menu-link">
+                                        <span class="mega-menu-icon">🕯️</span>
+                                        <div class="mega-menu-text">
+                                            <strong>Farbrengens</strong>
+                                            <span>Chassidic gatherings</span>
+                                        </div>
+                                        <span class="mega-menu-count">856</span>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <div class="mega-menu-section">
+                                <h3>Special Collections</h3>
+                                <div class="mega-menu-links">
+                                    <a href="#" class="mega-menu-link">
+                                        <span class="mega-menu-icon">💵</span>
+                                        <div class="mega-menu-text">
+                                            <strong>Dollars</strong>
+                                            <span>Sunday distributions</span>
+                                        </div>
+                                        <span class="mega-menu-count">523</span>
+                                    </a>
+                                    <a href="#" class="mega-menu-link">
+                                        <span class="mega-menu-icon">📹</span>
+                                        <div class="mega-menu-text">
+                                            <strong>770 Moments</strong>
+                                            <span>Raw footage</span>
+                                        </div>
+                                        <span class="mega-menu-count">2,134</span>
+                                    </a>
+                                    <a href="#" class="mega-menu-link">
+                                        <span class="mega-menu-icon">📖</span>
+                                        <div class="mega-menu-text">
+                                            <strong>Stories & Interviews</strong>
+                                            <span>Personal testimonials</span>
+                                        </div>
+                                        <span class="mega-menu-count">418</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- BROWSE BY TOPIC DROPDOWN -->
+                <div class="nav-item">
+                    <div class="nav-link-dropdown">
+                        Browse by Topic
+                        <span class="dropdown-arrow">▼</span>
+                    </div>
+                    <div class="mega-menu">
+                        <div class="mega-menu-grid">
+                            <div class="mega-menu-section">
+                                <h3>Jewish Holidays</h3>
+                                <div class="mega-menu-links">
+                                    <a href="#" class="mega-menu-link">
+                                        <span class="mega-menu-icon">🕎</span>
+                                        <div class="mega-menu-text"><strong>Chanukah</strong></div>
+                                    </a>
+                                    <a href="#" class="mega-menu-link">
+                                        <span class="mega-menu-icon">📜</span>
+                                        <div class="mega-menu-text"><strong>Passover</strong></div>
+                                    </a>
+                                    <a href="#" class="mega-menu-link">
+                                        <span class="mega-menu-icon">🎭</span>
+                                        <div class="mega-menu-text"><strong>Purim</strong></div>
+                                    </a>
+                                    <a href="#" class="mega-menu-link">
+                                        <span class="mega-menu-icon">📯</span>
+                                        <div class="mega-menu-text"><strong>High Holidays</strong></div>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <div class="mega-menu-section">
+                                <h3>Life & Topics</h3>
+                                <div class="mega-menu-links">
+                                    <a href="#" class="mega-menu-link">
+                                        <span class="mega-menu-icon">👨‍👩‍👧‍👦</span>
+                                        <div class="mega-menu-text"><strong>Family</strong></div>
+                                    </a>
+                                    <a href="#" class="mega-menu-link">
+                                        <span class="mega-menu-icon">🎓</span>
+                                        <div class="mega-menu-text"><strong>Education</strong></div>
+                                    </a>
+                                    <a href="#" class="mega-menu-link">
+                                        <span class="mega-menu-icon">💼</span>
+                                        <div class="mega-menu-text"><strong>Leadership</strong></div>
+                                    </a>
+                                    <a href="#" class="mega-menu-link">
+                                        <span class="mega-menu-icon">🕊️</span>
+                                        <div class="mega-menu-text"><strong>Spirituality</strong></div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- BROWSE BY YEAR DROPDOWN -->
+                <div class="nav-item">
+                    <div class="nav-link-dropdown">
+                        Browse by Year
+                        <span class="dropdown-arrow">▼</span>
+                    </div>
+                    <div class="simple-dropdown">
+                        <a href="jem-browse-by-date.html">1950s</a>
+                        <a href="jem-browse-by-date.html">1960s</a>
+                        <a href="jem-browse-by-date.html">1970s</a>
+                        <a href="jem-browse-by-date.html">1980s</a>
+                        <a href="jem-browse-by-date.html">1990s</a>
+                        <a href="jem-browse-by-date.html">All Years</a>
+                    </div>
+                </div>
+                
+                <a href="jem-articles-page.html" class="nav-link">Articles</a>
+                
+                <button class="premium-btn" onclick="scrollToSection('membership')">✨ Become a Member</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- FEATURED SLIDER -->
+    <div class="featured-slider">
+        <!-- SLIDE 1 -->
+        <div class="slide active" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <div class="slide-overlay">
+                <div class="slide-content">
+                    <div class="slide-text">
+                        <span class="slide-badge">FREE</span>
+                        <h2>Introduction to the Rebbe</h2>
+                        <p>A comprehensive overview of the Rebbe's life, mission, and lasting impact on millions around the world.</p>
+                        <div class="slide-meta">
+                            <span>⏱ 8 minutes 24 seconds</span>
+                            <span>👁 245K views</span>
+                        </div>
+                        <div class="slide-actions">
+                            <button class="btn btn-primary" onclick="window.location.href='jem-video-player.html'">
+                                <span>▶</span>
+                                <span>Watch Now</span>
+                            </button>
+                            <button class="btn btn-outline" onclick="scrollToSection('beginner')">
+                                <span>I'm New Here</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="slide-preview">
+                        <div class="play-icon">▶</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 2 -->
+        <div class="slide" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+            <div class="slide-overlay">
+                <div class="slide-content">
+                    <div class="slide-text">
+                        <span class="slide-badge premium">MEMBERS ONLY</span>
+                        <h2>Purim Farbrengen 5747</h2>
+                        <p>A joyous gathering filled with the Rebbe's teachings, stories, and the profound spirit of Purim.</p>
+                        <div class="slide-meta">
+                            <span>⏱ 2 hours 15 minutes</span>
+                            <span>👁 128K views</span>
+                        </div>
+                        <div class="slide-actions">
+                            <button class="btn btn-primary" onclick="scrollToSection('membership')">
+                                <span>🔒</span>
+                                <span>Unlock with Membership</span>
+                            </button>
+                            <button class="btn btn-outline">
+                                <span>Preview</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="slide-preview">
+                        <div class="play-icon">▶</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3 -->
+        <div class="slide" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+            <div class="slide-overlay">
+                <div class="slide-content">
+                    <div class="slide-text">
+                        <span class="slide-badge">FREE THIS WEEK</span>
+                        <h2>Moments of Connection</h2>
+                        <p>Beautiful encounters during Sunday dollar distributions, showing the Rebbe's personal touch with thousands.</p>
+                        <div class="slide-meta">
+                            <span>⏱ 18 minutes 42 seconds</span>
+                            <span>👁 92K views</span>
+                        </div>
+                        <div class="slide-actions">
+                            <button class="btn btn-primary">
+                                <span>▶</span>
+                                <span>Watch Now</span>
+                            </button>
+                            <button class="btn btn-outline">
+                                <span>Save to Playlist</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="slide-preview">
+                        <div class="play-icon">▶</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDER CONTROLS -->
+        <div class="slider-arrow prev" onclick="changeSlide(-1)">‹</div>
+        <div class="slider-arrow next" onclick="changeSlide(1)">›</div>
+        
+        <div class="slider-nav">
+            <div class="slider-dot active" onclick="goToSlide(0)"></div>
+            <div class="slider-dot" onclick="goToSlide(1)"></div>
+            <div class="slider-dot" onclick="goToSlide(2)"></div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-container">
+        <!-- FEATURED VIDEOS -->
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Featured This Week</h2>
+                    <a href="#" class="section-link">View All →</a>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="video-card" onclick="window.location.href='jem-video-player.html'">
+                        <div class="video-thumbnail" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
+                            <div class="access-badge free">FREE</div>
+                            <div class="video-duration">12:08</div>
+                        </div>
+                        <div class="video-info">
+                            <div class="video-category">Interview</div>
+                            <h3 class="video-title">My Encounter with the Rebbe</h3>
+                            <p class="video-description">Personal testimony of a life-changing meeting.</p>
+                            <div class="video-meta">
+                                <span>👁 23K views</span>
+                                <span>📅 Today</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="video-card premium">
+                        <div class="video-thumbnail" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                            <div class="access-badge premium">MEMBERS</div>
+                            <div class="video-duration">45:22</div>
+                            <div class="premium-lock">
+                                <div class="lock-icon">🔒</div>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <div class="video-category">Public Talk</div>
+                            <h3 class="video-title">The Power of Education</h3>
+                            <p class="video-description">Timeless wisdom on Jewish education.</p>
+                            <div class="video-meta">
+                                <span>👁 67K views</span>
+                                <span>📅 5 days ago</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="video-card">
+                        <div class="video-thumbnail" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+                            <div class="access-badge free">FREE</div>
+                            <div class="video-duration">8:51</div>
+                        </div>
+                        <div class="video-info">
+                            <div class="video-category">Teaching</div>
+                            <h3 class="video-title">The Meaning of Joy</h3>
+                            <p class="video-description">A brief discourse on simcha.</p>
+                            <div class="video-meta">
+                                <span>👁 15K views</span>
+                                <span>📅 3 days ago</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="video-card">
+                        <div class="video-thumbnail" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <div class="access-badge free">FREE</div>
+                            <div class="video-duration">11:24</div>
+                        </div>
+                        <div class="video-info">
+                            <div class="video-category">Documentary</div>
+                            <h3 class="video-title">770 Eastern Parkway</h3>
+                            <p class="video-description">The story behind Chabad headquarters.</p>
+                            <div class="video-meta">
+                                <span>👁 54K views</span>
+                                <span>📅 1 week ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- NEW TO THE REBBE BANNER (MOVED HERE AFTER FIRST ROW) -->
+            <div class="beginner-banner" id="beginner-banner">
+                <div class="banner-container">
+                    <button class="banner-close" onclick="closeBanner()">×</button>
+                    <div class="banner-content">
+                        <div class="banner-icon">👋</div>
+                        <div class="banner-text">
+                            <h3>New to the Rebbe?</h3>
+                            <p>Start your journey with our beginner-friendly introduction and glossary</p>
+                        </div>
+                        <div class="banner-actions">
+                            <a href="jem-video-player.html" class="banner-btn primary">Watch Introduction Video</a>
+                            <a href="#" class="banner-btn secondary">View Glossary</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RECENTLY ADDED -->
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Recently Added</h2>
+                    <a href="#" class="section-link">View All →</a>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="video-card">
+                        <div class="video-thumbnail" style="background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);">
+                            <div class="access-badge free">FREE</div>
+                            <div class="video-duration">7:22</div>
+                        </div>
+                        <div class="video-info">
+                            <div class="video-category">Event</div>
+                            <h3 class="video-title">Lag B'Omer Parade</h3>
+                            <p class="video-description">Annual children's parade footage.</p>
+                            <div class="video-meta">
+                                <span>👁 18K views</span>
+                                <span>📅 Yesterday</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="video-card premium">
+                        <div class="video-thumbnail" style="background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);">
+                            <div class="access-badge premium">MEMBERS</div>
+                            <div class="video-duration">1:12:08</div>
+                            <div class="premium-lock">
+                                <div class="lock-icon">🔒</div>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <div class="video-category">Documentary</div>
+                            <h3 class="video-title">Chassidic Philosophy</h3>
+                            <p class="video-description">Introduction to the Rebbe's teachings.</p>
+                            <div class="video-meta">
+                                <span>👁 23K views</span>
+                                <span>📅 3 days ago</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="video-card">
+                        <div class="video-thumbnail" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <div class="access-badge free">FREE</div>
+                            <div class="video-duration">9:47</div>
+                        </div>
+                        <div class="video-info">
+                            <div class="video-category">Documentary</div>
+                            <h3 class="video-title">770 Eastern Parkway</h3>
+                            <p class="video-description">The story of Chabad headquarters.</p>
+                            <div class="video-meta">
+                                <span>👁 54K views</span>
+                                <span>📅 2 weeks ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    <!-- COMPACT MEMBERSHIP BANNER -->
+    <div class="main-container">
+        <div class="membership-banner-compact">
+            <div class="content">
+                <h3>✨ Unlock the Full Archive</h3>
+                <p>Get unlimited access to 5,000+ videos with a JEM membership</p>
+            </div>
+            <button onclick="openMembershipModal()">View Plans & Pricing</button>
+        </div>
+    </div>
+
+    <!-- MEMBERSHIP MODAL -->
+    <div class="modal-overlay" id="membership-modal" onclick="closeModalIfClickedOutside(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeMembershipModal()">×</button>
+            
+            <div class="modal-header">
+                <h2>Become a Member</h2>
+                <p>Support our mission to preserve and share the Rebbe's teachings while gaining unlimited access to our entire archive.</p>
+            </div>
+            
+            <div class="modal-body">
+                <div class="modal-pricing-cards">
+                    <!-- FREE TIER -->
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3>Free</h3>
+                        </div>
+                        <div class="pricing-price">$0</div>
+                        <ul class="pricing-features">
+                            <li>Videos under 12 minutes</li>
+                            <li>Introduction playlist</li>
+                            <li>Weekly featured video</li>
+                            <li>Holiday content</li>
+                            <li>720p quality</li>
+                        </ul>
+                        <button class="pricing-cta">Current Plan</button>
+                    </div>
+
+                    <!-- PREMIUM TIER -->
+                    <div class="pricing-card featured">
+                        <div class="pricing-header">
+                            <h3>Premium</h3>
+                        </div>
+                        <div class="pricing-price">$8<span style="font-size: 1rem;">/mo</span></div>
+                        <ul class="pricing-features">
+                            <li>All content, unlimited</li>
+                            <li>1080p/4K quality</li>
+                            <li>Download for offline</li>
+                            <li>Transcripts & translations</li>
+                            <li>Advanced search</li>
+                            <li>Ad-free experience</li>
+                        </ul>
+                        <button class="pricing-cta">Start Membership</button>
+                    </div>
+
+                    <!-- ANNUAL TIER -->
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3>Annual</h3>
+                        </div>
+                        <div class="pricing-price">$80<span style="font-size: 1rem;">/yr</span></div>
+                        <ul class="pricing-features">
+                            <li>Everything in Premium</li>
+                            <li>Save $16 per year</li>
+                            <li>Priority support</li>
+                            <li>Gift memberships</li>
+                            <li>Member recognition</li>
+                        </ul>
+                        <button class="pricing-cta">Join Annual</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="membership-section" id="membership">
+        <div class="membership-container">
+            <h2>Become a Member</h2>
+            <p>Support our mission to preserve and share the Rebbe's teachings while gaining unlimited access to our entire archive.</p>
+            
+            <div class="pricing-cards">
+                <!-- FREE TIER -->
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Free</h3>
+                    </div>
+                    <div class="pricing-price">$0</div>
+                    <ul class="pricing-features">
+                        <li>Videos under 12 minutes</li>
+                        <li>Introduction playlist</li>
+                        <li>Weekly featured video</li>
+                        <li>Holiday content</li>
+                        <li>720p quality</li>
+                    </ul>
+                    <button class="pricing-cta">Current Plan</button>
+                </div>
+
+                <!-- PREMIUM TIER -->
+                <div class="pricing-card featured">
+                    <div class="pricing-header">
+                        <h3>Premium</h3>
+                    </div>
+                    <div class="pricing-price">$8<span style="font-size: 1rem;">/mo</span></div>
+                    <ul class="pricing-features">
+                        <li>All content, unlimited</li>
+                        <li>1080p/4K quality</li>
+                        <li>Download for offline</li>
+                        <li>Transcripts & translations</li>
+                        <li>Advanced search</li>
+                        <li>Ad-free experience</li>
+                    </ul>
+                    <button class="pricing-cta">Start Membership</button>
+                </div>
+
+                <!-- ANNUAL TIER -->
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Annual</h3>
+                    </div>
+                    <div class="pricing-price">$80<span style="font-size: 1rem;">/yr</span></div>
+                    <ul class="pricing-features">
+                        <li>Everything in Premium</li>
+                        <li>Save $16 per year</li>
+                        <li>Priority support</li>
+                        <li>Gift memberships</li>
+                        <li>Member recognition</li>
+                    </ul>
+                    <button class="pricing-cta">Join Annual</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-about">
+                <h3>JEM</h3>
+                <p>Jewish Educational Media preserves and shares the Rebbe's legacy through video, audio, and written materials accessible to everyone, everywhere.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Browse</h4>
+                <a href="jem-films-page.html">Films</a>
+                <a href="#">Talks</a>
+                <a href="#">Farbrengens</a>
+                <a href="jem-articles-page.html">Articles</a>
+            </div>
+            <div class="footer-links">
+                <h4>Membership</h4>
+                <a href="#">Become a Member</a>
+                <a href="#">Gift Membership</a>
+                <a href="#">Student Discount</a>
+            </div>
+            <div class="footer-links">
+                <h4>About</h4>
+                <a href="#">Our Mission</a>
+                <a href="#">Contact Us</a>
+                <a href="#">FAQ</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Jewish Educational Media. Preserving the Rebbe's legacy.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Close banner function
+        function closeBanner() {
+            document.getElementById('beginner-banner').classList.add('hidden');
+            // Store in localStorage so it doesn't show again this session
+            localStorage.setItem('bannerClosed', 'true');
+        }
+        
+        // Check if banner was previously closed
+        window.addEventListener('load', function() {
+            if (localStorage.getItem('bannerClosed') === 'true') {
+                document.getElementById('beginner-banner').classList.add('hidden');
+            }
+        });
+        
+        // Membership modal functions
+        function openMembershipModal() {
+            document.getElementById('membership-modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeMembershipModal() {
+            document.getElementById('membership-modal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        function closeModalIfClickedOutside(event) {
+            if (event.target.id === 'membership-modal') {
+                closeMembershipModal();
+            }
+        }
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeMembershipModal();
+            }
+        });
+        
+        // SLIDER FUNCTIONALITY
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.slider-dot');
+
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            currentSlide = (n + slides.length) % slides.length;
+            
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        function goToSlide(n) {
+            showSlide(n);
+        }
+
+        // Auto-advance slides every 5 seconds
+        setInterval(() => {
+            changeSlide(1);
+        }, 5000);
+
+        // Filter pills
+        document.querySelectorAll('.filter-pill').forEach(pill => {
+            pill.addEventListener('click', function() {
+                document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Scroll function
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

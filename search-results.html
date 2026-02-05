@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search: Passover - JEM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --accent: #c9a961;
+            --text-dark: #1a1a1a;
+            --text-light: #6b7280;
+            --bg-light: #faf9f7;
+            --premium-gradient: linear-gradient(135deg, #c9a961 0%, #b8935a 100%);
+            --free-color: #059669;
+            --article-color: #8b5cf6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            color: var(--text-dark);
+            background: var(--bg-light);
+        }
+        
+        /* HEADER */
+        header {
+            background: var(--primary);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        
+        .search-bar {
+            flex: 1;
+            max-width: 600px;
+            position: relative;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 0.75rem 3rem 0.75rem 1.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .search-bar input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .search-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--premium-gradient);
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+        
+        /* FILTER BAR */
+        .filter-bar {
+            background: white;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .filter-container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        
+        .search-info {
+            margin-bottom: 1.5rem;
+        }
+        
+        .search-info h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .result-summary {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+        
+        .filter-tabs {
+            display: flex;
+            gap: 1rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        
+        .filter-tab {
+            padding: 1rem 1.5rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-light);
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.3s;
+        }
+        
+        .filter-tab:hover {
+            color: var(--accent);
+        }
+        
+        .filter-tab.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+        
+        .filter-tab .count {
+            background: var(--bg-light);
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            margin-left: 0.5rem;
+        }
+        
+        .filter-tab.active .count {
+            background: var(--accent);
+            color: white;
+        }
+        
+        /* CONTENT */
+        .content-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+        
+        /* VIDEO CARDS */
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        .content-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .content-card.video {
+            /* Default styling */
+        }
+        
+        .content-card.video.premium {
+            border: 2px solid transparent;
+            background: linear-gradient(white, white) padding-box,
+                        var(--premium-gradient) border-box;
+        }
+        
+        .video-thumbnail {
+            position: relative;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .premium-lock {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 40%, rgba(0, 0, 0, 0.9) 100%);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 2rem;
+            z-index: 3;
+        }
+        
+        .lock-icon {
+            font-size: 2rem;
+            color: var(--accent);
+        }
+        
+        .video-duration {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 0.5rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            z-index: 2;
+        }
+        
+        .access-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            z-index: 2;
+            text-transform: uppercase;
+        }
+        
+        .access-badge.free {
+            background: var(--free-color);
+            color: white;
+        }
+        
+        .access-badge.premium {
+            background: var(--premium-gradient);
+            color: white;
+        }
+        
+        /* ARTICLE CARDS */
+        .content-card.article {
+            border-left: 4px solid var(--article-color);
+        }
+        
+        .article-header {
+            height: 100px;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .article-type-badge {
+            background: var(--article-color);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .read-time {
+            position: absolute;
+            bottom: 10px;
+            right: 12px;
+            background: rgba(0, 0, 0, 0.75);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* SHARED INFO */
+        .card-info {
+            padding: 1.5rem;
+        }
+        
+        .card-category {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .video .card-category {
+            color: var(--accent);
+        }
+        
+        .article .card-category {
+            color: var(--article-color);
+        }
+        
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+        
+        .card-description {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .article .card-description {
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        
+        .card-meta {
+            display: flex;
+            gap: 1rem;
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+        
+        /* CONTENT TYPE INDICATOR */
+        .content-type-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.3rem 0.75rem;
+            background: var(--bg-light);
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        
+        .video .content-type-indicator {
+            color: var(--accent);
+        }
+        
+        .article .content-type-indicator {
+            color: var(--article-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-content">
+            <div class="logo" onclick="window.location.href='index-final.html'">JEM</div>
+            
+            <div class="search-bar">
+                <input type="text" placeholder="Search videos, articles, topics..." value="Passover">
+                <button class="search-btn">🔍</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- FILTER BAR -->
+    <div class="filter-bar">
+        <div class="filter-container">
+            <div class="search-info">
+                <h1>Search Results for "Passover"</h1>
+                <p class="result-summary">Found 42 results (28 videos, 14 articles)</p>
+            </div>
+            
+            <div class="filter-tabs">
+                <button class="filter-tab active" onclick="filterContent('all')">
+                    All Results
+                    <span class="count">42</span>
+                </button>
+                <button class="filter-tab" onclick="filterContent('video')">
+                    📹 Videos
+                    <span class="count">28</span>
+                </button>
+                <button class="filter-tab" onclick="filterContent('article')">
+                    📄 Articles
+                    <span class="count">14</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- RESULTS GRID -->
+    <div class="content-container">
+        <div class="content-grid" id="results-grid">
+            <!-- VIDEO CARD 1 -->
+            <div class="content-card video" data-type="video">
+                <div class="video-thumbnail" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <div class="access-badge free">FREE</div>
+                    <div class="video-duration">
+                        <span>📹</span>
+                        <span>12:08</span>
+                    </div>
+                </div>
+                <div class="card-info">
+                    <div class="content-type-indicator">📹 Video</div>
+                    <div class="card-category">Short Talk</div>
+                    <h3 class="card-title">The Four Sons at the Seder</h3>
+                    <p class="card-description">Understanding the four types of children and their questions at the Passover table.</p>
+                    <div class="card-meta">
+                        <span>👁 45K views</span>
+                        <span>📅 2 weeks ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ARTICLE CARD 1 -->
+            <div class="content-card article" data-type="article">
+                <div class="article-header">
+                    <div class="article-type-badge">
+                        <span>📄</span>
+                        <span>Article</span>
+                    </div>
+                    <div class="read-time">
+                        <span>📖</span>
+                        <span>10 min read</span>
+                    </div>
+                </div>
+                <div class="card-info">
+                    <div class="content-type-indicator">📄 Article</div>
+                    <div class="card-category">Essay</div>
+                    <h3 class="card-title">Freedom and Responsibility: The Rebbe's Passover Message</h3>
+                    <p class="card-description">An in-depth exploration of how the Rebbe connected the Exodus narrative to modern Jewish life and personal liberation from spiritual constraints.</p>
+                    <div class="card-meta">
+                        <span>👁 8.2K reads</span>
+                        <span>📅 1 month ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIDEO CARD 2 -->
+            <div class="content-card video premium" data-type="video">
+                <div class="video-thumbnail" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <div class="access-badge premium">MEMBERS</div>
+                    <div class="video-duration">
+                        <span>📹</span>
+                        <span>1:42:15</span>
+                    </div>
+                    <div class="premium-lock">
+                        <div class="lock-icon">🔒</div>
+                    </div>
+                </div>
+                <div class="card-info">
+                    <div class="content-type-indicator">📹 Video</div>
+                    <div class="card-category">Farbrengen</div>
+                    <h3 class="card-title">Passover Farbrengen 5741</h3>
+                    <p class="card-description">Complete farbrengen on the themes of freedom, redemption, and the Passover story.</p>
+                    <div class="card-meta">
+                        <span>👁 23K views</span>
+                        <span>📅 Last month</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIDEO CARD 3 -->
+            <div class="content-card video" data-type="video">
+                <div class="video-thumbnail" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                    <div class="access-badge free">FREE</div>
+                    <div class="video-duration">
+                        <span>📹</span>
+                        <span>8:33</span>
+                    </div>
+                </div>
+                <div class="card-info">
+                    <div class="content-type-indicator">📹 Video</div>
+                    <div class="card-category">Teaching</div>
+                    <h3 class="card-title">The Meaning of Matzah</h3>
+                    <p class="card-description">Why we eat unleavened bread on Passover and its spiritual significance.</p>
+                    <div class="card-meta">
+                        <span>👁 67K views</span>
+                        <span>📅 3 weeks ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ARTICLE CARD 2 -->
+            <div class="content-card article" data-type="article">
+                <div class="article-header">
+                    <div class="article-type-badge">
+                        <span>🎤</span>
+                        <span>Interview</span>
+                    </div>
+                    <div class="read-time">
+                        <span>📖</span>
+                        <span>15 min read</span>
+                    </div>
+                </div>
+                <div class="card-info">
+                    <div class="content-type-indicator">📄 Article</div>
+                    <div class="card-category">Personal Story</div>
+                    <h3 class="card-title">My Passover Yechidus with the Rebbe</h3>
+                    <p class="card-description">Rabbi Cohen recalls his private audience with the Rebbe before Passover 1982, where he received guidance that transformed his approach to Jewish outreach.</p>
+                    <div class="card-meta">
+                        <span>👁 12K reads</span>
+                        <span>📅 2 weeks ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIDEO CARD 4 -->
+            <div class="content-card video premium" data-type="video">
+                <div class="video-thumbnail" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                    <div class="access-badge premium">MEMBERS</div>
+                    <div class="video-duration">
+                        <span>📹</span>
+                        <span>52:14</span>
+                    </div>
+                    <div class="premium-lock">
+                        <div class="lock-icon">🔒</div>
+                    </div>
+                </div>
+                <div class="card-info">
+                    <div class="content-type-indicator">📹 Video</div>
+                    <div class="card-category">Documentary</div>
+                    <h3 class="card-title">Passover in 770</h3>
+                    <p class="card-description">Documenting Passover celebrations at Chabad headquarters through the decades.</p>
+                    <div class="card-meta">
+                        <span>👁 31K views</span>
+                        <span>📅 2 months ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ARTICLE CARD 3 -->
+            <div class="content-card article" data-type="article">
+                <div class="article-header">
+                    <div class="article-type-badge">
+                        <span>📝</span>
+                        <span>Essay</span>
+                    </div>
+                    <div class="read-time">
+                        <span>📖</span>
+                        <span>8 min read</span>
+                    </div>
+                </div>
+                <div class="card-info">
+                    <div class="content-type-indicator">📄 Article</div>
+                    <div class="card-category">Analysis</div>
+                    <h3 class="card-title">The Seder Plate: Symbolism and Meaning</h3>
+                    <p class="card-description">A detailed examination of each item on the Seder plate and how the Rebbe explained their deeper significance in our modern lives.</p>
+                    <div class="card-meta">
+                        <span>👁 18K reads</span>
+                        <span>📅 3 weeks ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIDEO CARD 5 -->
+            <div class="content-card video" data-type="video">
+                <div class="video-thumbnail" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
+                    <div class="access-badge free">FREE</div>
+                    <div class="video-duration">
+                        <span>📹</span>
+                        <span>6:47</span>
+                    </div>
+                </div>
+                <div class="card-info">
+                    <div class="content-type-indicator">📹 Video</div>
+                    <div class="card-category">Short Talk</div>
+                    <h3 class="card-title">Children and the Seder</h3>
+                    <p class="card-description">The Rebbe's approach to involving children in the Passover experience.</p>
+                    <div class="card-meta">
+                        <span>👁 89K views</span>
+                        <span>📅 1 month ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ARTICLE CARD 4 -->
+            <div class="content-card article" data-type="article">
+                <div class="article-header">
+                    <div class="article-type-badge">
+                        <span>📰</span>
+                        <span>News</span>
+                    </div>
+                    <div class="read-time">
+                        <span>📖</span>
+                        <span>5 min read</span>
+                    </div>
+                </div>
+                <div class="card-info">
+                    <div class="content-type-indicator">📄 Article</div>
+                    <div class="card-category">JEM Update</div>
+                    <h3 class="card-title">Newly Restored: Passover Farbrengens from the 1970s</h3>
+                    <p class="card-description">JEM announces the completion of restoration work on 12 Passover farbrengens, now available in high definition for the first time.</p>
+                    <div class="card-meta">
+                        <span>👁 5.4K reads</span>
+                        <span>📅 1 week ago</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function filterContent(type) {
+            // Update active tab
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Filter cards
+            const cards = document.querySelectorAll('.content-card');
+            cards.forEach(card => {
+                if (type === 'all') {
+                    card.style.display = 'block';
+                } else {
+                    if (card.getAttribute('data-type') === type) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

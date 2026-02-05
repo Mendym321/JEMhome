@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse by Date - JEM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --accent: #c9a961;
+            --text-dark: #1a1a1a;
+            --text-light: #6b7280;
+            --bg-light: #faf9f7;
+            --premium-gradient: linear-gradient(135deg, #c9a961 0%, #b8935a 100%);
+            --free-color: #059669;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            background: var(--bg-light);
+        }
+        
+        /* HEADER */
+        header {
+            background: var(--primary);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            cursor: pointer;
+        }
+        
+        /* PAGE HEADER */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, #16213e 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        /* TIMELINE NAVIGATION */
+        .timeline-nav {
+            background: white;
+            padding: 2rem;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .timeline-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .decade-btn {
+            padding: 1rem 2rem;
+            background: var(--bg-light);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+        }
+        
+        .decade-btn:hover {
+            border-color: var(--accent);
+            background: white;
+        }
+        
+        .decade-btn.active {
+            background: var(--premium-gradient);
+            color: white;
+            border-color: transparent;
+        }
+        
+        /* MAIN CONTENT */
+        .main-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        
+        /* DECADE SECTION */
+        .decade-section {
+            margin-bottom: 4rem;
+        }
+        
+        .decade-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid var(--accent);
+        }
+        
+        .decade-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .decade-header p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+        
+        /* YEAR BLOCKS */
+        .years-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .year-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .year-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            border-color: var(--accent);
+        }
+        
+        .year-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--premium-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+        
+        .year-stats {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+        
+        .year-highlights {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        .year-highlights strong {
+            color: var(--accent);
+        }
+        
+        /* FEATURED VIDEOS FROM YEAR */
+        .year-videos {
+            display: none;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .year-card.expanded .year-videos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        /* VIDEO MINI CARDS */
+        .video-mini {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .video-mini:hover {
+            background: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .video-mini-thumb {
+            height: 120px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            position: relative;
+        }
+        
+        .mini-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: var(--free-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+        
+        .mini-duration {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+        
+        .video-mini h4 {
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+        
+        .video-mini p {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .timeline-container {
+                gap: 0.5rem;
+            }
+            
+            .decade-btn {
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-content">
+            <div class="logo" onclick="window.location.href='jem-homepage-clean.html'">JEM</div>
+        </div>
+    </header>
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+        <h1>Browse by Date</h1>
+        <p>Explore the Rebbe's teachings chronologically across four decades</p>
+    </div>
+
+    <!-- TIMELINE NAVIGATION -->
+    <div class="timeline-nav">
+        <div class="timeline-container">
+            <button class="decade-btn" onclick="scrollToDecade('1950s')">1950s</button>
+            <button class="decade-btn active" onclick="scrollToDecade('1960s')">1960s</button>
+            <button class="decade-btn" onclick="scrollToDecade('1970s')">1970s</button>
+            <button class="decade-btn" onclick="scrollToDecade('1980s')">1980s</button>
+            <button class="decade-btn" onclick="scrollToDecade('1990s')">1990s</button>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-container">
+        <!-- 1950s -->
+        <div class="decade-section" id="1950s">
+            <div class="decade-header">
+                <h2>The 1950s</h2>
+                <p>The beginning of leadership: Assuming the mantle and setting the vision</p>
+            </div>
+            
+            <div class="years-grid">
+                <div class="year-card" onclick="toggleYear(this)">
+                    <div class="year-number">1951</div>
+                    <div class="year-stats">124 videos • 18 free</div>
+                    <div class="year-highlights">
+                        <strong>Highlights:</strong> Acceptance of leadership, first farbrengens, initial public addresses
+                    </div>
+                </div>
+
+                <div class="year-card">
+                    <div class="year-number">1952</div>
+                    <div class="year-stats">156 videos • 24 free</div>
+                    <div class="year-highlights">
+                        <strong>Highlights:</strong> Expansion of outreach, establishment of educational programs
+                    </div>
+                </div>
+
+                <div class="year-card">
+                    <div class="year-number">1953</div>
+                    <div class="year-stats">142 videos • 19 free</div>
+                    <div class="year-highlights">
+                        <strong>Highlights:</strong> First major campaigns, growing global presence
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 1960s -->
+        <div class="decade-section" id="1960s">
+            <div class="decade-header">
+                <h2>The 1960s</h2>
+                <p>Building momentum: Expansion of the movement and technological innovation</p>
+            </div>
+            
+            <div class="years-grid">
+                <div class="year-card">
+                    <div class="year-number">1960</div>
+                    <div class="year-stats">198 videos • 31 free</div>
+                    <div class="year-highlights">
+                        <strong>Highlights:</strong> Tefillin campaign launch, extensive talks on current events
+                    </div>
+                </div>
+
+                <div class="year-card">
+                    <div class="year-number">1965</div>
+                    <div class="year-stats">234 videos • 42 free</div>
+                    <div class="year-highlights">
+                        <strong>Highlights:</strong> Post Six-Day War addresses, Israel-focused content
+                    </div>
+                </div>
+
+                <div class="year-card">
+                    <div class="year-number">1969</div>
+                    <div class="year-stats">267 videos • 38 free</div>
+                    <div class="year-highlights">
+                        <strong>Highlights:</strong> First color footage, extensive holiday farbrengens
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 1970s -->
+        <div class="decade-section" id="1970s">
+            <div class="decade-header">
+                <h2>The 1970s</h2>
+                <p>The golden age: Peak of public appearances and extensive documentation</p>
+            </div>
+            
+            <div class="years-grid">
+                <div class="year-card">
+                    <div class="year-number">1970</div>
+                    <div class="year-stats">312 videos • 54 free</div>
+                    <div class="year-highlights">
+                        <strong>Highlights:</strong> Major farbrengens, educational initiatives
+                    </div>
+                </div>
+
+                <div class="year-card">
+                    <div class="year-number">1975</div>
+                    <div class="year-stats">389 videos • 67 free</div>
+                    <div class="year-highlights">
+                        <strong>Highlights:</strong> Extensive talks on Jewish unity, Soviet Jewry campaigns
+                    </div>
+                </div>
+
+                <div class="year-card">
+                    <div class="year-number">1979</div>
+                    <div class="year-stats">421 videos • 71 free</div>
+                    <div class="year-highlights">
+                        <strong>Highlights:</strong> Iran crisis addresses, community building emphasis
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 1980s -->
+        <div class="decade-section" id="1980s">
+            <div class="decade-header">
+                <h2>The 1980s</h2>
+                <p>Sunday dollars and personal connections: Individual encounters documented</p>
+            </div>
+            
+            <div class="years-grid">
+                <div class="year-card">
+                    <div class="year-number">1980</div>
+                    <div class="year-stats">456 videos • 82 free</div>
+                    <div class="year-highlights">
+                        <strong>Highlights:</strong> Beginning of Sunday dollar distributions
+                    </div>
+                </div>
+
+                <div class="year-card">
+                    <div class="year-number">1985</div>
+                    <div class="year-stats">523 videos • 94 free</div>
+                    <div class="year-highlights">
+                        <strong>Highlights:</strong> Extensive dollar encounters, personal blessings
+                    </div>
+                </div>
+
+                <div class="year-card">
+                    <div class="year-number">1989</div>
+                    <div class="year-stats">487 videos • 89 free</div>
+                    <div class="year-highlights">
+                        <strong>Highlights:</strong> Fall of Berlin Wall addresses, redemption themes
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 1990s -->
+        <div class="decade-section" id="1990s">
+            <div class="decade-header">
+                <h2>The 1990s</h2>
+                <p>The final years: Precious moments and lasting messages</p>
+            </div>
+            
+            <div class="years-grid">
+                <div class="year-card">
+                    <div class="year-number">1990</div>
+                    <div class="year-stats">412 videos • 76 free</div>
+                    <div class="year-highlights">
+                        <strong>Highlights:</strong> Gulf War addresses, continued Sunday encounters
+                    </div>
+                </div>
+
+                <div class="year-card">
+                    <div class="year-number">1991</div>
+                    <div class="year-stats">389 videos • 68 free</div>
+                    <div class="year-highlights">
+                        <strong>Highlights:</strong> Soviet Union collapse, Moshiach emphasis
+                    </div>
+                </div>
+
+                <div class="year-card">
+                    <div class="year-number">1992</div>
+                    <div class="year-stats">234 videos • 42 free</div>
+                    <div class="year-highlights">
+                        <strong>Highlights:</strong> Final public appearances, rare precious moments
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Scroll to decade
+        function scrollToDecade(decade) {
+            // Update active button
+            document.querySelectorAll('.decade-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Scroll to section
+            document.getElementById(decade).scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Toggle year expansion (future feature)
+        function toggleYear(card) {
+            card.classList.toggle('expanded');
+        }
+    </script>
+</body>
+</html>

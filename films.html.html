@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Films & Documentaries - JEM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --primary-light: #16213e;
+            --accent: #c9a961;
+            --accent-bright: #e8c98c;
+            --text-dark: #1a1a1a;
+            --text-light: #6b7280;
+            --bg-light: #faf9f7;
+            --white: #ffffff;
+            --premium-gradient: linear-gradient(135deg, #c9a961 0%, #b8935a 50%, #a67c52 100%);
+            --free-color: #059669;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            background: var(--bg-light);
+        }
+        
+        /* HEADER */
+        header {
+            background: var(--primary);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 2px;
+            cursor: pointer;
+        }
+        
+        .search-bar {
+            flex: 1;
+            max-width: 500px;
+            margin: 0 2rem;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 0.75rem 1.5rem;
+            border: 2px solid rgba(201, 169, 97, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 25px;
+            font-size: 1rem;
+        }
+        
+        .search-bar input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .header-btn {
+            padding: 0.6rem 1.5rem;
+            background: var(--premium-gradient);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        /* BREADCRUMB */
+        .breadcrumb {
+            background: white;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .breadcrumb-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-light);
+        }
+        
+        .breadcrumb a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        /* PAGE HEADER */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* FILTER & SORT BAR */
+        .filter-sort-bar {
+            background: white;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .filter-sort-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .filter-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .filter-dropdown {
+            padding: 0.6rem 1.25rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .filter-dropdown:hover {
+            border-color: var(--accent);
+        }
+        
+        .result-count {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+        
+        /* VIEW TOGGLE */
+        .view-toggle {
+            display: flex;
+            gap: 0.5rem;
+            background: var(--bg-light);
+            padding: 0.25rem;
+            border-radius: 8px;
+        }
+        
+        .view-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        
+        .view-btn.active {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* CONTENT GRID */
+        .content-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+        
+        /* VIDEO CARDS */
+        .video-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        .video-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .video-card.premium {
+            border: 2px solid transparent;
+            background: linear-gradient(white, white) padding-box,
+                        var(--premium-gradient) border-box;
+        }
+        
+        .video-thumbnail {
+            position: relative;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+        }
+        
+        .premium-lock {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 40%, rgba(0, 0, 0, 0.9) 100%);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 2rem;
+            z-index: 3;
+        }
+        
+        .lock-icon {
+            font-size: 2rem;
+            color: var(--accent);
+        }
+        
+        .video-duration {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+        
+        .access-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            z-index: 2;
+            text-transform: uppercase;
+        }
+        
+        .access-badge.free {
+            background: var(--free-color);
+            color: white;
+        }
+        
+        .access-badge.premium {
+            background: var(--premium-gradient);
+            color: white;
+        }
+        
+        .video-info {
+            padding: 1.5rem;
+        }
+        
+        .video-category {
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .video-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+        
+        .video-description {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .video-meta {
+            display: flex;
+            gap: 1rem;
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+        
+        /* PAGINATION */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 4rem;
+        }
+        
+        .page-btn {
+            padding: 0.75rem 1.25rem;
+            border: 2px solid #e5e7eb;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .page-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        
+        .page-btn.active {
+            background: var(--premium-gradient);
+            color: white;
+            border-color: transparent;
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="logo" onclick="window.location.href='jem-freemium-final.html'">JEM</div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search films and documentaries...">
+        </div>
+        <button class="header-btn">✨ Become a Member</button>
+    </header>
+
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb">
+        <div class="breadcrumb-container">
+            <a href="#">Home</a>
+            <span>›</span>
+            <a href="#">Browse by Type</a>
+            <span>›</span>
+            <span>Films & Documentaries</span>
+        </div>
+    </div>
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+        <h1>Films & Documentaries</h1>
+        <p>Professionally produced content exploring the Rebbe's life, teachings, and impact on the world</p>
+    </div>
+
+    <!-- FILTER & SORT BAR -->
+    <div class="filter-sort-bar">
+        <div class="filter-sort-container">
+            <div class="filter-group">
+                <div class="filter-dropdown">
+                    <span>All Films</span>
+                    <span>▼</span>
+                </div>
+                <div class="filter-dropdown">
+                    <span>Duration: Any</span>
+                    <span>▼</span>
+                </div>
+                <div class="filter-dropdown">
+                    <span>Language: All</span>
+                    <span>▼</span>
+                </div>
+                <div class="filter-dropdown">
+                    <span>Sort: Most Recent</span>
+                    <span>▼</span>
+                </div>
+            </div>
+            
+            <div class="filter-group">
+                <span class="result-count">342 films found</span>
+                <div class="view-toggle">
+                    <button class="view-btn active">⊞ Grid</button>
+                    <button class="view-btn">☰ List</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIDEO GRID -->
+    <div class="content-container">
+        <div class="video-grid">
+            <!-- FREE VIDEO -->
+            <div class="video-card">
+                <div class="video-thumbnail" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <div class="access-badge free">FREE</div>
+                    <div class="video-duration">8:24</div>
+                </div>
+                <div class="video-info">
+                    <div class="video-category">Documentary Short</div>
+                    <h3 class="video-title">Introduction to the Rebbe</h3>
+                    <p class="video-description">A brief overview of the Rebbe's life and lasting impact.</p>
+                    <div class="video-meta">
+                        <span>👁 245K views</span>
+                        <span>📅 1 month ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PREMIUM VIDEO -->
+            <div class="video-card premium">
+                <div class="video-thumbnail" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <div class="access-badge premium">MEMBERS ONLY</div>
+                    <div class="video-duration">52:14</div>
+                    <div class="premium-lock">
+                        <div class="lock-icon">🔒</div>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <div class="video-category">Feature Documentary</div>
+                    <h3 class="video-title">A Mission of Love</h3>
+                    <p class="video-description">Exploring the Rebbe's profound impact on Jewish education.</p>
+                    <div class="video-meta">
+                        <span>👁 45K views</span>
+                        <span>📅 2 days ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FREE VIDEO -->
+            <div class="video-card">
+                <div class="video-thumbnail" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                    <div class="access-badge free">FREE</div>
+                    <div class="video-duration">12:08</div>
+                </div>
+                <div class="video-info">
+                    <div class="video-category">Documentary Short</div>
+                    <h3 class="video-title">The Rebbe's Daily Schedule</h3>
+                    <p class="video-description">A glimpse into a typical day in the Rebbe's life.</p>
+                    <div class="video-meta">
+                        <span>👁 128K views</span>
+                        <span>📅 2 weeks ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PREMIUM VIDEO -->
+            <div class="video-card premium">
+                <div class="video-thumbnail" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                    <div class="access-badge premium">MEMBERS ONLY</div>
+                    <div class="video-duration">1:24:33</div>
+                    <div class="premium-lock">
+                        <div class="lock-icon">🔒</div>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <div class="video-category">Feature Documentary</div>
+                    <h3 class="video-title">The Early Years</h3>
+                    <p class="video-description">The Rebbe's childhood, education, and path to leadership.</p>
+                    <div class="video-meta">
+                        <span>👁 67K views</span>
+                        <span>📅 1 week ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FREE VIDEO -->
+            <div class="video-card">
+                <div class="video-thumbnail" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
+                    <div class="access-badge free">FREE</div>
+                    <div class="video-duration">15:33</div>
+                </div>
+                <div class="video-info">
+                    <div class="video-category">Compilation</div>
+                    <h3 class="video-title">Stories of Impact</h3>
+                    <p class="video-description">Personal accounts of encounters with the Rebbe.</p>
+                    <div class="video-meta">
+                        <span>👁 92K views</span>
+                        <span>📅 3 weeks ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PREMIUM VIDEO -->
+            <div class="video-card premium">
+                <div class="video-thumbnail" style="background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);">
+                    <div class="access-badge premium">MEMBERS ONLY</div>
+                    <div class="video-duration">48:22</div>
+                    <div class="premium-lock">
+                        <div class="lock-icon">🔒</div>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <div class="video-category">Feature Documentary</div>
+                    <h3 class="video-title">A Leader's Vision</h3>
+                    <p class="video-description">The Rebbe's revolutionary approach to Jewish outreach.</p>
+                    <div class="video-meta">
+                        <span>👁 31K views</span>
+                        <span>📅 5 days ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FREE VIDEO -->
+            <div class="video-card">
+                <div class="video-thumbnail" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+                    <div class="access-badge free">FREE</div>
+                    <div class="video-duration">9:47</div>
+                </div>
+                <div class="video-info">
+                    <div class="video-category">Documentary Short</div>
+                    <h3 class="video-title">770 Eastern Parkway</h3>
+                    <p class="video-description">The story of Chabad headquarters and its significance.</p>
+                    <div class="video-meta">
+                        <span>👁 54K views</span>
+                        <span>📅 2 weeks ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PREMIUM VIDEO -->
+            <div class="video-card premium">
+                <div class="video-thumbnail" style="background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);">
+                    <div class="access-badge premium">MEMBERS ONLY</div>
+                    <div class="video-duration">1:12:08</div>
+                    <div class="premium-lock">
+                        <div class="lock-icon">🔒</div>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <div class="video-category">Feature Documentary</div>
+                    <h3 class="video-title">Chassidic Philosophy</h3>
+                    <p class="video-description">An introduction to the Rebbe's teachings on Chassidus.</p>
+                    <div class="video-meta">
+                        <span>👁 23K views</span>
+                        <span>📅 3 days ago</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGINATION -->
+        <div class="pagination">
+            <button class="page-btn">← Previous</button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">4</button>
+            <button class="page-btn">...</button>
+            <button class="page-btn">12</button>
+            <button class="page-btn">Next →</button>
+        </div>
+    </div>
+</body>
+</html>

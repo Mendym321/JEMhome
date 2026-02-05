@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction to the Rebbe - JEM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --primary-light: #16213e;
+            --accent: #c9a961;
+            --accent-bright: #e8c98c;
+            --text-dark: #1a1a1a;
+            --text-light: #6b7280;
+            --bg-light: #faf9f7;
+            --white: #ffffff;
+            --premium-gradient: linear-gradient(135deg, #c9a961 0%, #b8935a 50%, #a67c52 100%);
+            --free-color: #059669;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            background: var(--bg-light);
+        }
+        
+        /* HEADER */
+        header {
+            background: var(--primary);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 2px;
+            cursor: pointer;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .btn-header {
+            padding: 0.6rem 1.5rem;
+            background: var(--premium-gradient);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-header:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(201, 169, 97, 0.4);
+        }
+        
+        /* MAIN LAYOUT */
+        .main-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+        }
+        
+        /* VIDEO PLAYER SECTION */
+        .video-section {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .video-player {
+            position: relative;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            aspect-ratio: 16/9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .play-overlay {
+            text-align: center;
+        }
+        
+        .play-button {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            border: 3px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: pointer;
+            margin: 0 auto 1rem;
+            transition: all 0.3s;
+        }
+        
+        .play-button:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.4);
+        }
+        
+        .video-quality-badge {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+        
+        /* VIDEO INFO */
+        .video-info {
+            padding: 2rem;
+        }
+        
+        .video-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .video-title-section h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+        
+        .video-meta {
+            display: flex;
+            gap: 1.5rem;
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+        
+        .access-badge {
+            background: var(--free-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .video-actions {
+            display: flex;
+            gap: 1rem;
+            padding: 1.5rem 0;
+            border-top: 1px solid #e5e7eb;
+            border-bottom: 1px solid #e5e7eb;
+            margin-bottom: 1.5rem;
+        }
+        
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-light);
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        .action-btn:hover {
+            border-color: var(--accent);
+            background: white;
+        }
+        
+        .action-btn.primary {
+            background: var(--premium-gradient);
+            color: white;
+            border-color: transparent;
+        }
+        
+        .action-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(201, 169, 97, 0.4);
+        }
+        
+        /* TABS FOR CONTENT TYPES */
+        .content-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        
+        .tab {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            font-weight: 600;
+            color: var(--text-light);
+            transition: all 0.3s;
+        }
+        
+        .tab:hover {
+            color: var(--accent);
+        }
+        
+        .tab.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .description {
+            color: var(--text-dark);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        
+        .description h3 {
+            font-family: 'Playfair Display', serif;
+            margin: 1.5rem 0 0.5rem;
+            color: var(--primary);
+        }
+        
+        .description p {
+            margin-bottom: 1rem;
+        }
+        
+        /* ARTICLE/WRITTEN CONTENT STYLING */
+        .article-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .article-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .article-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .article-meta {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .article-body {
+            line-height: 1.9;
+            color: var(--text-dark);
+        }
+        
+        .article-body p {
+            margin-bottom: 1.2rem;
+        }
+        
+        .article-body blockquote {
+            border-left: 4px solid var(--accent);
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: var(--text-light);
+        }
+        
+        /* TRANSCRIPT STYLING */
+        .transcript {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .timestamp {
+            color: var(--accent);
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+        
+        /* SIDEBAR */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .sidebar-section {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .sidebar-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        /* RELATED VIDEOS */
+        .related-video {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 0.5rem;
+        }
+        
+        .related-video:hover {
+            background: var(--bg-light);
+        }
+        
+        .related-thumbnail {
+            width: 120px;
+            height: 68px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            position: relative;
+            flex-shrink: 0;
+        }
+        
+        .related-duration {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+        
+        .related-info h4 {
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+            color: var(--text-dark);
+        }
+        
+        .related-info p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+        
+        /* WRITTEN CONTENT CARD */
+        .content-card {
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .content-card:hover {
+            border-color: var(--accent);
+            background: var(--bg-light);
+        }
+        
+        .content-type-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+        
+        .content-card h4 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+        
+        .content-card p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+        
+        .read-time {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+        
+        /* UPGRADE PROMPT */
+        .upgrade-prompt {
+            background: var(--premium-gradient);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .upgrade-prompt h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .upgrade-prompt p {
+            margin-bottom: 1.5rem;
+            opacity: 0.95;
+        }
+        
+        .upgrade-btn {
+            background: white;
+            color: var(--primary);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .upgrade-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 1200px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="logo" onclick="window.location.href='jem-freemium-final.html'">JEM</div>
+        <div class="header-actions">
+            <button class="btn-header">🔍 Search</button>
+            <button class="btn-header">✨ Become a Member</button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-container">
+        <!-- LEFT: VIDEO & DETAILS -->
+        <div class="video-section">
+            <!-- VIDEO PLAYER -->
+            <div class="video-player">
+                <div class="play-overlay">
+                    <div class="play-button">▶</div>
+                    <div class="video-quality-badge">🎬 720p HD • FREE</div>
+                </div>
+            </div>
+            
+            <!-- VIDEO INFO -->
+            <div class="video-info">
+                <div class="video-header">
+                    <div class="video-title-section">
+                        <h1>Introduction to the Rebbe</h1>
+                        <div class="video-meta">
+                            <span>👁 245K views</span>
+                            <span>📅 1 month ago</span>
+                            <span>⏱ 8 minutes 24 seconds</span>
+                        </div>
+                    </div>
+                    <div class="access-badge">FREE</div>
+                </div>
+                
+                <!-- ACTIONS -->
+                <div class="video-actions">
+                    <button class="action-btn primary">
+                        <span>👍</span>
+                        <span>Like</span>
+                    </button>
+                    <button class="action-btn">
+                        <span>💾</span>
+                        <span>Save to Playlist</span>
+                    </button>
+                    <button class="action-btn">
+                        <span>📤</span>
+                        <span>Share</span>
+                    </button>
+                    <button class="action-btn">
+                        <span>⬇</span>
+                        <span>Download (Members)</span>
+                    </button>
+                </div>
+                
+                <!-- TABS FOR DIFFERENT CONTENT -->
+                <div class="content-tabs">
+                    <div class="tab active" onclick="switchTab('description')">Description</div>
+                    <div class="tab" onclick="switchTab('transcript')">Transcript</div>
+                    <div class="tab" onclick="switchTab('article')">Related Article</div>
+                    <div class="tab" onclick="switchTab('comments')">Discussion (23)</div>
+                </div>
+                
+                <!-- TAB CONTENT: DESCRIPTION -->
+                <div id="description" class="tab-content active">
+                    <div class="description">
+                        <p>
+                            Rabbi Menachem Mendel Schneerson (1902-1994), known to millions simply as "the Rebbe," was the seventh leader of the Chabad-Lubavitch movement and one of the most influential Jewish leaders of the 20th century.
+                        </p>
+                        <p>
+                            This brief introduction explores the Rebbe's life, his revolutionary approach to Jewish outreach, and the lasting impact of his teachings on millions around the world.
+                        </p>
+                        
+                        <h3>What You'll Learn:</h3>
+                        <p>
+                            • The Rebbe's early life and education<br>
+                            • His vision for Jewish renewal after the Holocaust<br>
+                            • The global Chabad movement he built<br>
+                            • His unique approach to every individual<br>
+                            • His lasting legacy and influence
+                        </p>
+                        
+                        <h3>Perfect For:</h3>
+                        <p>
+                            This video is ideal for anyone new to the Rebbe's teachings, students learning about modern Jewish history, or anyone curious about one of the most remarkable spiritual leaders of our time.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- TAB CONTENT: TRANSCRIPT -->
+                <div id="transcript" class="tab-content">
+                    <div class="transcript">
+                        <p><span class="timestamp">[00:00]</span> In the heart of Brooklyn, New York, at 770 Eastern Parkway, lived a man who would touch millions of lives across the globe...</p>
+                        <p><span class="timestamp">[00:24]</span> Rabbi Menachem Mendel Schneerson, known simply as "the Rebbe," led the Chabad-Lubavitch movement for over forty years...</p>
+                        <p><span class="timestamp">[00:48]</span> Born in 1902 in Nikolaev, Russia, the Rebbe received both a traditional Jewish education and secular studies in mathematics and engineering...</p>
+                        <p><span class="timestamp">[01:12]</span> After fleeing Europe during the Holocaust, the Rebbe and his wife, Rebbetzin Chaya Mushka, arrived in New York in 1941...</p>
+                        <p><span class="timestamp">[01:36]</span> In 1951, following the passing of his father-in-law, the previous Rebbe, he reluctantly accepted the leadership...</p>
+                        <p style="text-align: center; margin-top: 1.5rem; color: var(--text-light);">
+                            <em>Full transcript available to members • <a href="#" style="color: var(--accent);">Upgrade now</a></em>
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- TAB CONTENT: RELATED ARTICLE -->
+                <div id="article" class="tab-content">
+                    <div class="article-content">
+                        <div class="article-header">
+                            <h3>The Rebbe's Revolutionary Approach to Jewish Education</h3>
+                            <div class="article-meta">
+                                By Rabbi Dovid Zaklikowski • JEM Staff Writer • 5 min read
+                            </div>
+                        </div>
+                        <div class="article-body">
+                            <p>
+                                When the Rebbe assumed leadership of Chabad-Lubavitch in 1951, the Jewish world was still reeling from the devastation of the Holocaust. Traditional Jewish life in Europe had been decimated, and many wondered if Judaism could survive in the modern world.
+                            </p>
+                            <p>
+                                The Rebbe's answer was revolutionary: rather than retreating into insularity, he advocated for bold outreach. "Every Jew is precious," he would often say, and this principle guided everything he did.
+                            </p>
+                            <blockquote>
+                                "A little light dispels a lot of darkness." - The Rebbe
+                            </blockquote>
+                            <p>
+                                His approach to education was equally innovative. The Rebbe emphasized that Jewish education wasn't just about accumulating knowledge—it was about transformation. He encouraged his followers to become "living examples" of Jewish values...
+                            </p>
+                            <p style="text-align: center; margin-top: 2rem;">
+                                <a href="#" style="color: var(--accent); font-weight: 600;">Read full article →</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- TAB CONTENT: COMMENTS/DISCUSSION -->
+                <div id="comments" class="tab-content">
+                    <div style="padding: 2rem; text-align: center; color: var(--text-light);">
+                        <p><em>Discussion feature coming soon. Join our community to share your thoughts and experiences.</em></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- RIGHT: SIDEBAR -->
+        <div class="sidebar">
+            <!-- UP NEXT / AUTOPLAY -->
+            <div class="sidebar-section">
+                <h3>Up Next</h3>
+                
+                <div class="related-video">
+                    <div class="related-thumbnail" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <div class="related-duration">12:08</div>
+                    </div>
+                    <div class="related-info">
+                        <h4>The Rebbe's Daily Schedule</h4>
+                        <p>Short Film • FREE</p>
+                    </div>
+                </div>
+                
+                <div class="related-video">
+                    <div class="related-thumbnail" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <div class="related-duration">15:33</div>
+                    </div>
+                    <div class="related-info">
+                        <h4>Stories of Impact</h4>
+                        <p>Compilation • FREE</p>
+                    </div>
+                </div>
+                
+                <div class="related-video">
+                    <div class="related-thumbnail" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <div class="related-duration">45:22</div>
+                    </div>
+                    <div class="related-info">
+                        <h4>A Farbrengen on Joy 🔒</h4>
+                        <p>Members Only</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- RELATED WRITTEN CONTENT -->
+            <div class="sidebar-section">
+                <h3>Related Content</h3>
+                
+                <div class="content-card">
+                    <span class="content-type-badge">Article</span>
+                    <h4>The Rebbe and Technology</h4>
+                    <p>How the Rebbe embraced modern tools to spread ancient wisdom</p>
+                    <div class="read-time">📖 4 min read</div>
+                </div>
+                
+                <div class="content-card">
+                    <span class="content-type-badge">Interview</span>
+                    <h4>Rabbi Cunin Remembers</h4>
+                    <p>Personal recollections of meetings with the Rebbe</p>
+                    <div class="read-time">📖 8 min read</div>
+                </div>
+                
+                <div class="content-card">
+                    <span class="content-type-badge">News</span>
+                    <h4>JEM Restores 50 New Videos</h4>
+                    <p>Latest updates on our preservation efforts</p>
+                    <div class="read-time">📖 2 min read</div>
+                </div>
+            </div>
+            
+            <!-- UPGRADE PROMPT -->
+            <div class="upgrade-prompt">
+                <h3>Unlock Full Access</h3>
+                <p>Watch 5,000+ videos in 4K, download for offline viewing, and access exclusive content.</p>
+                <button class="upgrade-btn">Become a Member - $8/month</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Mark selected tab as active
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

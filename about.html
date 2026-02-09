@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About JEM - Our Mission</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --primary-light: #16213e;
+            --accent: #c9a961;
+            --text-dark: #1a1a1a;
+            --text-light: #6b7280;
+            --bg-light: #faf9f7;
+            --premium-gradient: linear-gradient(135deg, #c9a961 0%, #b8935a 100%);
+            --free-color: #059669;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            background: var(--bg-light);
+        }
+        
+        /* HEADER */
+        header {
+            background: var(--primary);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 2px;
+            cursor: pointer;
+        }
+        
+        .main-nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+        }
+        
+        .nav-link:hover {
+            color: var(--accent);
+            background: rgba(201, 169, 97, 0.1);
+        }
+        
+        .nav-link.active {
+            background: var(--accent);
+            color: var(--primary);
+        }
+        
+        /* HERO SECTION */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="rgba(201,169,97,0.1)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.4rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+        }
+        
+        /* STATS BAR */
+        .stats-bar {
+            background: white;
+            padding: 3rem 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: var(--premium-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+        
+        /* MAIN CONTAINER */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        /* SECTION */
+        .section {
+            margin-bottom: 5rem;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* MISSION STATEMENT */
+        .mission-box {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 4rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mission-box::before {
+            content: "📜";
+            position: absolute;
+            font-size: 20rem;
+            opacity: 0.05;
+            right: -5rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .mission-box h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .mission-box p {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+            opacity: 0.95;
+            position: relative;
+        }
+        
+        /* TIMELINE */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+        
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--accent);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content {
+            grid-column: 2;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-year {
+            grid-column: 1;
+            text-align: right;
+        }
+        
+        .timeline-year {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            background: var(--premium-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-year {
+            justify-content: flex-start;
+        }
+        
+        .timeline-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        .timeline-content h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .timeline-content p {
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: var(--accent);
+            border-radius: 50%;
+            border: 5px solid var(--bg-light);
+            z-index: 2;
+        }
+        
+        /* VALUES GRID */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        
+        .value-card {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+        }
+        
+        .value-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .value-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .value-card h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .value-card p {
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+        
+        /* VIDEO SHOWCASE */
+        .video-showcase {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+        
+        .video-preview {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .play-button {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .play-button:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.4);
+        }
+        
+        .video-info {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .video-info h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .video-info p {
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        
+        .video-info .btn {
+            align-self: flex-start;
+            padding: 1rem 2rem;
+            background: var(--premium-gradient);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .video-info .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(201, 169, 97, 0.4);
+        }
+        
+        /* IMPACT STATS */
+        .impact-section {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            padding: 4rem 2rem;
+            margin: 4rem 0;
+            border-radius: 20px;
+        }
+        
+        .impact-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+        }
+        
+        .impact-card {
+            text-align: center;
+        }
+        
+        .impact-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .impact-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+        
+        .impact-text {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+        
+        /* CTA SECTION */
+        .cta-section {
+            background: var(--premium-gradient);
+            color: white;
+            padding: 4rem 3rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(201, 169, 97, 0.4);
+        }
+        
+        .cta-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-section p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .cta-btn {
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .cta-btn.primary {
+            background: white;
+            color: var(--primary);
+        }
+        
+        .cta-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .cta-btn.secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .cta-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* FOOTER */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 3rem 2rem 2rem;
+        }
+        
+        .footer-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-about h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        .footer-links h4 {
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        .footer-links a {
+            display: block;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        
+        .footer-bottom {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(201, 169, 97, 0.2);
+            text-align: center;
+            opacity: 0.6;
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 1200px) {
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                grid-template-columns: 1fr;
+                padding-left: 80px;
+            }
+            
+            .timeline-item:nth-child(even) .timeline-content,
+            .timeline-item:nth-child(even) .timeline-year {
+                grid-column: 1;
+                text-align: left;
+            }
+            
+            .timeline-year {
+                justify-content: flex-start !important;
+                font-size: 3rem;
+            }
+            
+            .timeline-dot {
+                left: 30px;
+            }
+            
+            .video-showcase {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .impact-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-nav {
+                display: none;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-content">
+            <div class="logo" onclick="window.location.href='index.html'">JEM</div>
+            
+            <nav class="main-nav">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="films.html" class="nav-link">Films</a>
+                <a href="articles.html" class="nav-link">Articles</a>
+                <a href="browse-by-date.html" class="nav-link">Browse by Date</a>
+                <a href="about.html" class="nav-link active">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Preserving the Rebbe's Legacy</h1>
+            <p>For over 40 years, we've been documenting, restoring, and sharing the teachings of the Rebbe with the world.</p>
+        </div>
+    </div>
+
+    <!-- STATS BAR -->
+    <div class="stats-bar">
+        <div class="stats-container">
+            <div class="stat">
+                <div class="stat-number">5,000+</div>
+                <div class="stat-label">Videos Archived</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">2.5M+</div>
+                <div class="stat-label">Hours Watched</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">180+</div>
+                <div class="stat-label">Countries Reached</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">40+</div>
+                <div class="stat-label">Years of History</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-container">
+        <!-- MISSION STATEMENT -->
+        <section class="section">
+            <div class="mission-box">
+                <h3>Our Mission</h3>
+                <p>Jewish Educational Media (JEM) is dedicated to preserving and sharing the teachings, wisdom, and legacy of the Rebbe, Rabbi Menachem M. Schneerson, of righteous memory. Through state-of-the-art restoration, digitization, and distribution, we ensure that future generations can experience the Rebbe's profound impact on Jewish life and beyond.</p>
+            </div>
+        </section>
+
+        <!-- CORE VALUES -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">Our Core Values</h2>
+                <p class="section-subtitle">The principles that guide everything we do</p>
+            </div>
+            
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">🎬</div>
+                    <h4>Preservation</h4>
+                    <p>We meticulously restore and archive thousands of hours of footage, ensuring the Rebbe's teachings remain accessible for generations to come.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">🌍</div>
+                    <h4>Accessibility</h4>
+                    <p>Making the Rebbe's wisdom available to everyone, everywhere—free or through affordable memberships that support our mission.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">✨</div>
+                    <h4>Excellence</h4>
+                    <p>Using cutting-edge technology and expertise to deliver the highest quality content and user experience possible.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- OUR HISTORY -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">Our Journey</h2>
+                <p class="section-subtitle">Four decades of dedication to preserving history</p>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">1980</div>
+                    <div class="timeline-content">
+                        <h4>The Beginning</h4>
+                        <p>JEM was founded with a simple but powerful vision: to document and preserve the Rebbe's every public appearance, teaching, and interaction for posterity.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-year">1995</div>
+                    <div class="timeline-content">
+                        <h4>Digital Revolution</h4>
+                        <p>We began the massive undertaking of digitizing decades of analog footage, making it searchable and accessible to a global audience.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-year">2010</div>
+                    <div class="timeline-content">
+                        <h4>HD Restoration</h4>
+                        <p>Launched our state-of-the-art restoration studio, bringing rare footage from the 1950s-1990s into stunning high definition.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-year">2024</div>
+                    <div class="timeline-content">
+                        <h4>Global Platform</h4>
+                        <p>Launched our modern streaming platform, making the complete archive accessible worldwide with advanced search, translations, and community features.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIDEO SHOWCASE -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">See Our Work</h2>
+                <p class="section-subtitle">Experience the quality of our restoration and production</p>
+            </div>
+            
+            <div class="video-showcase">
+                <div class="video-preview">
+                    <div class="play-button">▶</div>
+                </div>
+                <div class="video-info">
+                    <h3>Behind the Scenes at JEM</h3>
+                    <p>Take a tour of our restoration studios and see how we transform decades-old footage into crystal-clear digital archives. Meet our team of dedicated professionals working to preserve history.</p>
+                    <button class="btn" onclick="window.location.href='video-player.html'">Watch Now</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- IMPACT SECTION -->
+    <div class="impact-section">
+        <div class="main-container">
+            <div class="section-header">
+                <h2 class="section-title">Our Impact</h2>
+                <p class="section-subtitle">The reach of our preservation efforts</p>
+            </div>
+            
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <div class="impact-icon">📺</div>
+                    <div class="impact-number">12K+</div>
+                    <div class="impact-text">Hours of Footage Restored</div>
+                </div>
+                
+                <div class="impact-card">
+                    <div class="impact-icon">🎓</div>
+                    <div class="impact-number">500+</div>
+                    <div class="impact-text">Educational Institutions Served</div>
+                </div>
+                
+                <div class="impact-card">
+                    <div class="impact-icon">💫</div>
+                    <div class="impact-number">1M+</div>
+                    <div class="impact-text">Lives Touched Annually</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA SECTION -->
+    <div class="main-container">
+        <div class="cta-section">
+            <h3>Join Us in Preserving History</h3>
+            <p>Your support helps us continue our vital mission of restoration, preservation, and education.</p>
+            <div class="cta-buttons">
+                <a href="index.html#membership" class="cta-btn primary">Become a Member</a>
+                <a href="articles.html" class="cta-btn secondary">Read Our Stories</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-about">
+                <h3>JEM</h3>
+                <p>Jewish Educational Media preserves and shares the Rebbe's legacy through video, audio, and written materials accessible to everyone, everywhere.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Browse</h4>
+                <a href="films.html">Films</a>
+                <a href="articles.html">Articles</a>
+                <a href="browse-by-date.html">By Year</a>
+            </div>
+            <div class="footer-links">
+                <h4>About</h4>
+                <a href="about.html">Our Mission</a>
+                <a href="#">Contact Us</a>
+                <a href="#">FAQ</a>
+            </div>
+            <div class="footer-links">
+                <h4>Support</h4>
+                <a href="#">Become a Member</a>
+                <a href="#">Donate</a>
+                <a href="#">Volunteer</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Jewish Educational Media. Preserving the Rebbe's legacy.</p>
+        </div>
+    </footer>
+</body>
+</html>

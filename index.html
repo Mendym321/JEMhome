@@ -59,6 +59,111 @@
             cursor: pointer;
         }
         
+        /* EXPANDABLE SEARCH */
+        .search-container {
+            position: relative;
+        }
+        
+        .search-icon-btn {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+        }
+        
+        .search-icon-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: scale(1.05);
+        }
+        
+        .search-expanded {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 400px;
+            background: var(--primary);
+            border: 2px solid var(--accent);
+            border-radius: 25px;
+            padding: 0.5rem 1rem;
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+        }
+        
+        .search-expanded.active {
+            display: flex;
+            animation: expandSearch 0.3s ease;
+        }
+        
+        @keyframes expandSearch {
+            from {
+                width: 45px;
+                opacity: 0;
+            }
+            to {
+                width: 400px;
+                opacity: 1;
+            }
+        }
+        
+        .search-expanded input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            padding: 0.5rem;
+            outline: none;
+        }
+        
+        .search-expanded input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .search-expanded .search-submit {
+            background: var(--premium-gradient);
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+        
+        .search-expanded .search-submit:hover {
+            transform: scale(1.1);
+        }
+        
+        .search-expanded .search-close {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .search-expanded .search-close:hover {
+            color: white;
+            transform: rotate(90deg);
+        }
+        
         .main-nav {
             display: flex;
             gap: 2rem;
@@ -1215,6 +1320,16 @@
                 
                 <a href="about.html" class="nav-link">About</a>
                 
+                <!-- EXPANDABLE SEARCH -->
+                <div class="search-container">
+                    <button class="search-icon-btn" onclick="toggleSearch()">🔍</button>
+                    <div class="search-expanded" id="searchExpanded">
+                        <input type="text" placeholder="Search videos, articles, topics..." id="searchInput" onkeypress="if(event.key==='Enter') performSearch()">
+                        <button class="search-submit" onclick="performSearch()">→</button>
+                        <button class="search-close" onclick="toggleSearch()">✕</button>
+                    </div>
+                </div>
+                
                 <button class="premium-btn" onclick="openMembershipModal()">✨ Become a Member</button>
             </nav>
         </div>
@@ -1645,6 +1760,40 @@
     </footer>
 
     <script>
+        // Expandable search toggle
+        function toggleSearch() {
+            const searchExpanded = document.getElementById('searchExpanded');
+            const searchInput = document.getElementById('searchInput');
+            
+            if (searchExpanded.classList.contains('active')) {
+                searchExpanded.classList.remove('active');
+            } else {
+                searchExpanded.classList.add('active');
+                setTimeout(() => searchInput.focus(), 300); // Focus after animation
+            }
+        }
+        
+        // Search functionality
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value;
+            if (searchTerm.trim()) {
+                // Redirect to search results page with query
+                window.location.href = 'search-results.html?q=' + encodeURIComponent(searchTerm);
+            }
+        }
+        
+        // Close search when clicking outside
+        document.addEventListener('click', function(event) {
+            const searchContainer = document.querySelector('.search-container');
+            const searchExpanded = document.getElementById('searchExpanded');
+            
+            if (searchExpanded && searchExpanded.classList.contains('active')) {
+                if (!searchContainer.contains(event.target)) {
+                    searchExpanded.classList.remove('active');
+                }
+            }
+        });
+        
         // Close banner function
         function closeBanner() {
             document.getElementById('beginner-banner').classList.add('hidden');
